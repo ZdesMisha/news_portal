@@ -24,7 +24,14 @@ public class NewsController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/news", method = RequestMethod.GET)
-    public List<Post> getNews(@RequestParam(name = "page", required = false, defaultValue = "1") String page) {
+    public List<Post> getNews(@RequestParam(name = "page", required = false, defaultValue = "0") String page) {
         return newsRepository.findAll(new PageRequest(Integer.parseInt(page), pageSize));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/news/search", method = RequestMethod.GET)
+    public List<Post> searchByPattern(@RequestParam(name = "pattern") String pattern,
+                                      @RequestParam(name = "page", required = false, defaultValue = "0") String page) {
+        return newsRepository.findByNameContainingIgnoreCase(pattern,new PageRequest(Integer.parseInt(page), pageSize));
     }
 }

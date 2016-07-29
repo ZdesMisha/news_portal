@@ -13,4 +13,7 @@ import java.util.List;
 @Repository
 public interface NewsRepository extends CrudRepository<Post, Long> {
     List<Post> findAll(Pageable pagable);
+
+    List<Post> findByNameContainingIgnoreCase(String pattern, Pageable page);
+
 }
